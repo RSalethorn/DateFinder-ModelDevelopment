@@ -1,4 +1,5 @@
 import re
+import math
 
 def tokenize_dates(date_strings):
         # Regex pattern: splits on punctuation and spaces, keeping them as separate tokens
@@ -31,3 +32,27 @@ def string_list_seperator(string_list):
         format_list[i] = format_list[i].replace("\\\\","\\") 
 
     return format_list
+
+def pretty_print_tags(tag_list):
+    chars = []
+    tags = [[], [], []]
+    for char, tag in tag_list:
+        chars.append(char)
+        tag = list(tag)
+        for x in range(len(tags)):
+            if tag[x] == "N":
+                tag[x] = " "
+            tags[x].append(tag[x])
+    original_date = "".join(chars)
+    table_width = (len(original_date) * 2) + 1
+
+    border_difference = table_width - len(original_date)
+    border = "=" * math.floor((border_difference / 2))
+    
+    header = f"{border} {original_date} {border}"[:table_width]
+
+    print(header)
+    print('|' + '|'.join(chars) + '|')
+    print('|' + '|'.join(tags[0]) + '|')
+    print('|' + '|'.join(tags[2]) + '|')
+    print(f"{'=' * table_width}")

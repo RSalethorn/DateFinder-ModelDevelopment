@@ -125,7 +125,7 @@ index_to_tag = {
 
 
 # Load the saved model weights
-model = torch.load('model.model')
+model = torch.load('model_Gloria_Osinski.model')
 # Determine the device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = model.to(device)

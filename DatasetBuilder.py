@@ -39,5 +39,5 @@ class DatasetBuilder:
             file.write(json.dumps(dataset_list, indent=4))
 
 if __name__ == "__main__":
-    dsb = DatasetBuilder("combinations.json", "dataset.json", 100000)
+    dsb = DatasetBuilder("combinations.json", "new_dataset.json", 100000)
     dsb.build()
