@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 
-from DateModelList import DateModelList
+from datefinder.file_handlers.DateModelList import DateModelList
 
 import requests
 
@@ -147,22 +147,23 @@ class Trainer:
                       "embedding_dim": self.embedding_dim, 
                       "hidden_dim": self.hidden_dim,
                       "epochs": self.epochs,
-                      "batch_size": self.batch_size}
+                      "batch_size": self.batch_size,
+                      "training_dataset": self.data_location}
         
         model_list.addModel(model_json)
 
-        torch.save(self.model, f"model_{model_name}.model")
+        torch.save(self.model, f"./data/models/model_{model_name}.model")
 
 if __name__ == '__main__':
-    embedding_dim = [32, 64, 96]
+    embedding_dim = [64, 96, 128]
     hidden_dim = [64, 128, 192]
     epochs = [5]
     batch_size = [1]
-    dataset = ["medium_dataset.json", "large_dataset.json"]
+    dataset = ["./data/datasets/medium_dataset.json", "./data/datasets/large_dataset.json"]
 
     model_param_combinations = list(product(embedding_dim, hidden_dim, epochs, batch_size, dataset))
 
-    model_list = DateModelList("date_model_list.json")
+    model_list = DateModelList("./data/models/evaluations/model_list.json")
 
     for model_params in model_param_combinations:
         trainer = Trainer(model_list = model_list,

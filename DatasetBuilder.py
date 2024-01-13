@@ -1,7 +1,7 @@
 import json
 import random
-from Date import DateFormat
-from DateHelper import string_list_seperator
+from datefinder.data_types.Date import DateFormat
+from datefinder.helpers.DateHelper import string_list_seperator
 
 class DatasetBuilder:
     def __init__(self, combinations_filename, dataset_filename, length):
@@ -39,5 +39,5 @@ class DatasetBuilder:
             file.write(json.dumps(dataset_list, indent=4))
 
 if __name__ == "__main__":
-    dsb = DatasetBuilder("combinations.json", "new_dataset.json", 100000)
+    dsb = DatasetBuilder("./data/combinations/combinations.json", "./data/datasets/new_dataset.json", 10000)
     dsb.build()

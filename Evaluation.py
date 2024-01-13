@@ -6,9 +6,9 @@ import math
 import json
 import csv
 import random
-from Date import DateFormat
-from DateModelList import DateModelList
-from DateHelper import pretty_print_tags
+from datefinder.data_types.Date import DateFormat
+from datefinder.file_handlers.DateModelList import DateModelList
+from datefinder.helpers.DateHelper import pretty_print_tags
 import pandas
 
 char_to_index = {
@@ -115,7 +115,7 @@ class Evaluator:
     
     def evaluate_on_generated_data(self, total_dates, model_list=None):
         print(f"--------- Model began evaluation on generated data - {self.model_location} --------")
-        with open('combinations.json', 'r') as file:
+        with open('./data/formats/formats.json', 'r') as file:
             combinations = json.load(file)
 
         total_tags = 0
@@ -162,7 +162,7 @@ class Evaluator:
         return {"correct_tags": correct_tags, 
                 "total_tags": total_tags, 
                 "correct_tags_percentage": correct_tags_percentage,
-                
+
                 "perfect_date_count": perfect_date_count, 
                 "total_dates": total_dates, 
                 "perfect_dates_percentage": perfect_dates_percentage}
@@ -185,14 +185,18 @@ class Evaluator:
             print(f"Time Taken: {total_time}")
 
 if __name__ == "__main__":
-    model_list = DateModelList("date_model_list.json")
+    #ev = Evaluator(f"./data/models/model_Meagan_Jerde_IV.model").evaluate_on_input_data()
+
+    model_list = DateModelList("./data/models/evaluations/model_list.json")
     model_list_data = model_list.readAll()
 
     for model in model_list_data:
-        ev = Evaluator(f"model_{model['name']}.model")
-        eval_data = ev.evaluate_on_generated_data(100000)
-        for key, value in eval_data.items():
-            model_list.changeValue(model["name"], key, value)    
+        """if "correct_tags" in model:
+            continue"""
+        ev = Evaluator(f"./data/models/model_{model['name']}.model")
+        eval_data = ev.evaluate_on_generated_data(100)
+        """for key, value in eval_data.items():
+            model_list.changeValue(model["name"], key, value)   """ 
 
 
 
